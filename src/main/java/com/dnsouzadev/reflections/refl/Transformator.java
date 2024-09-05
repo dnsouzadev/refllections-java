@@ -8,7 +8,7 @@ public class Transformator {
 
     public <I, O> O transform(I input) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Class<?> source = input.getClass();
-        Class<?> target = Class.forName(source + "DTO");
+        Class<?> target = Class.forName(source.getName() + "DTO");
 
         O targetClass = (O) target.getDeclaredConstructor().newInstance();
 
@@ -21,7 +21,7 @@ public class Transformator {
                     try {
                         targetField.set(targetClass, sourceField.get(input));
                     } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 }));
 
@@ -29,7 +29,8 @@ public class Transformator {
     }
 
     private void validate(Field sourceField, Field targetField) {
-        if (sourceField.getName().equals(targetField.getName()) && sourceField.getType().equals(targetField.getType())) {
+        if (sourceField.getName().equals(targetField.getName())
+                && sourceField.getType().equals(targetField.getType())) {
             sourceField.setAccessible(true);
             targetField.setAccessible(true);
         }

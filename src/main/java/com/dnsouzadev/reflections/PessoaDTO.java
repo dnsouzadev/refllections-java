@@ -1,4 +1,14 @@
 package com.dnsouzadev.reflections;
 
-public record PessoaDTO(String nome, String cpf) {
+public class PessoaDTO {
+    private String nome;
+    private String cpf;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
 }
