@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 public class TransformatorTest {
 
     Pessoa pessoa = new Pessoa(1L, "Daniel", "1234");
+    Endereco endereco = new Endereco("Rua 1", 123);
 
     @Test
     public void shouldTransform() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -18,5 +19,13 @@ public class TransformatorTest {
         Assertions.assertInstanceOf(PessoaDTO.class, pessoaDto);
         Assertions.assertEquals(pessoa.getNome(), pessoaDto.getNome());
         Assertions.assertEquals(pessoa.getCpf(), pessoaDto.getCpf());
+    }
+
+    @Test
+    public void shouldNotTransform() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Assertions.assertThrows(ClassNotFoundException.class, () -> {
+            Transformator transformator = new Transformator();
+            transformator.transform(endereco);
+        });
     }
 }
